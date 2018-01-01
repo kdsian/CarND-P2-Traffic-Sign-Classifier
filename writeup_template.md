@@ -140,15 +140,19 @@ My final model results were:
 
 If an iterative approach was chosen:
 * What were some problems with the initial architecture?
+
 accuracy 가 0.93 이하로 측정되어서 hyperparameter 를 수정하는 작업을 반복하여도 일정 accuracy 이상 상승 하지 않는 문제가 있었습니다.
 
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
+ 
  dropout 을 추가하여 accuracy 를 상승시켰습니다. dropout 적용시 validation accuracy 도 상승하고 test set 에 대한 accuracy 역시 상승 하였습니다.
 
 * Which parameters were tuned? How were they adjusted and why?
+
 컴퓨팅 파워 상에서는 데이터의 크기도 작고 숫자도 많지 않았기 떄문에 Epoch 크기는 증가시키고 batch 크기는 감소, learning rate역시 감소 시켜 일정 부분 학습이 늦게 되어도 높은 정확도를 갖도록 iteration 작업을 수행 했습니다.
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+
 최종적으로 가장 정확도를 높힌 것은 dropout layer를 추가하는 것이 가장 효과적이었습니다.
  
 
@@ -166,35 +170,26 @@ The first image might be difficult to classify because ...
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+![alt text][image6] 
 
+위 결과를 보면 대부분의 표지판은 제대로 인식하는 것을 알 수 있습니다.
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+다만 train data set에서 40km/h 에 대한 데이터 set이 없어서 학습이 진행되지 않았기 때문에 30km/h로 결과가 측정 된 부분은
+
+data set이 보충된다면 해결 될 문제로 보이나
+
+20km/h 표지판을 30km/h로 결과가 나온 것은 측정 오류로 보완해야 할 점으로 보입니다.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in  the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+각각의 sofrmax의 확률을 보면 제대로 측정한 표지판의 경구 거의 100% 확률로 결과를 예측하는 것을 볼 수 있습니다.
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+다만 앞서 말한 20km/h 표지판을 잘못 인지한 부분에서는 20km/h와 30km/h의 label에서 각각 0.4와 0.6 의 확률로 결과가 나온 부분을 볼 수 있습니다.
+
+![alt text][image7] 
 
 
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
 
