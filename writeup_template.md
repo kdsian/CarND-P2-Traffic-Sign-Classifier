@@ -4,7 +4,7 @@
 
 **Build a Traffic Sign Recognition Project**
 
-The goals / steps of this project are the following:
+본 프로젝트의 목표 및 수행한 step은 아래와 같습니다.:
 * Load the data set (see below for links to the project data set)
 * Explore, summarize and visualize the data set
 * Design, train and test a model architecture
@@ -29,7 +29,9 @@ The goals / steps of this project are the following:
 
 
 ## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+프로젝트 구현 과정에서 아래 사항에 대해 고려하면서 작업을 수행했습니다. 
+[rubric points](https://review.udacity.com/#!/rubrics/481/view) 
+각각의 항목이 어떻게 구현되었는지는 아래 설명을 통해 보여드리겠습니다.
 
 ---
 ### Writeup / README
@@ -42,14 +44,15 @@ You're reading it! and here is a link to my [project code](https://github.com/kd
 
 #### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the numpy library to calculate summary statistics of the traffic
-signs data set:
+summary statistics of the traffic 을 위해서 numpy library를 주로 사용하였습니다.
 
-* The size of training set is 34799
-* The size of the validation set is 4410
-* The size of test set is 12630
-* The shape of a traffic sign image is (32,32,3)
-* The number of unique classes/labels in the data set is 43
+sign data의 구조는 아래와 같습니다.:
+
+* The size of training set : 34799
+* The size of the validation set : 4410
+* The size of test set : 12630
+* The shape of a traffic sign image : (32,32,3)
+* The number of unique classes/labels in the data set : 43
 
 #### 2. Include an exploratory visualization of the dataset.
 
@@ -65,26 +68,84 @@ signs data set:
 
 ![alt text][image1_1]
 
-train sample의 분포를 살펴보면 아래와 같습니다.
+label별 train sample의 분포를 살펴보면 아래와 같습니다.
+x축이 label 값이며 y축이 갯수입니다.
 
 ![alt text][image1_2]
+
+| ClassId         		|     SignName	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|0|	Speed limit (20km/h)|
+|1|	Speed limit (30km/h)
+|2|	Speed limit (50km/h)
+|3|	Speed limit (60km/h)
+|4|	Speed limit (70km/h)
+|5|	Speed limit (80km/h)
+|6|	End of speed limit (80km/h)
+|7|	Speed limit (100km/h)
+|8|	Speed limit (120km/h)
+|9|	No passing
+|10|	No passing for vehicles over 3.5 metric tons
+|11	|Right-of-way at the next intersection
+|12|	Priority road
+|13|	Yield
+|14|	Stop
+|15|	No vehicles
+|16|	Vehicles over 3.5 metric tons prohibited
+|17|	No entry
+|18|	General caution
+|19|	Dangerous curve to the left
+|20|	Dangerous curve to the right
+|21|	Double curve
+|22|	Bumpy road
+|23|	Slippery road
+|24|	Road narrows on the right
+|25|	Road work
+|26|	Traffic signals
+|27|	Pedestrians
+|28|	Children crossing
+|29|	Bicycles crossing
+|30|	Beware of ice/snow
+|31|	Wild animals crossing
+|32|	End of all speed and passing limits
+|33|	Turn right ahead
+|34|	Turn left ahead
+|35|	Ahead only
+|36|	Go straight or right
+|37|	Go straight or left
+|38|	Keep right
+|39|	Keep left
+|40|	Roundabout mandatory
+|41|	End of no passing
+|42|	End of no passing by vehicles over 3.5 metric tons
 
 
 ### Design and Test a Model Architecture
 
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+#### 1. Describe how you *preprocessed* the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. 
 
+##### 1) Gray 변환
 첫 번째 과정으로 grayscale로 변환하는 작업을 수행했습니다.
 
 수행 예시는 아래와 같습니다.
 
+기존 line detection 과제의 연장선으로 수행하다보니 gray scale로 변환 하는 작업을 수행하였으나, 표지판의 경우 색의 정보도 중요하다고 생각합니다.
+
+추후에 기회가 된다면 R,G,B 입력을 받는 모델로 수정해보도록 하겠습니다.
+
 ![alt text][image2]
 
+##### 2) 정규화 과정
+
 두 번째 과정으로는 normalize 작업을 수행했습니다.
+
+입력 데이터의 정규화는 중요한 요소로 알려져있고 실제로
 
 수행 유무에 대한 성능 차이가 심하게 나타나여 필수적으로 구현했습니다.
 
 수행 후 예제는 아래와 같습니다. 
+
+
 
 ![alt text][image3]
 
@@ -132,24 +193,18 @@ LeNet 모델 구조는 아래와 같습니다.
 * learning rate : 0.0005
 * Dropout probability : 0.5
 
+hyperparameter 고려를 줄이기 위해 optimizer의 경우 ADAM optimizer를 사용하였습니다.
+
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-My final model results were:
-* validation set accuracy of 0.974
-* test set accuracy of 0.944
+최종적으로 모델 학습 및 평가 결과는 아래와 같이 나타났습니다.
+* validation set accuracy : 0.974
+* test set accuracy : 0.944
 
 If an iterative approach was chosen:
-* What were some problems with the initial architecture?
-
-accuracy 가 0.93 이하로 측정되어서 hyperparameter 를 수정하는 작업을 반복하여도 일정 accuracy 이상 상승 하지 않는 문제가 있었습니다.
-
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
  
- dropout 을 추가하여 accuracy 를 상승시켰습니다. dropout 적용시 validation accuracy 도 상승하고 test set 에 대한 accuracy 역시 상승 하였습니다.
-
-* Which parameters were tuned? How were they adjusted and why?
-
-컴퓨팅 파워 상에서는 데이터의 크기도 작고 숫자도 많지 않았기 떄문에 Epoch 크기는 증가시키고 batch 크기는 감소, learning rate역시 감소 시켜 일정 부분 학습이 늦게 되어도 높은 정확도를 갖도록 iteration 작업을 수행 했습니다.
+ dropout 을 추가하여 accuracy 를 상승시켰습니다. dropout 적용시 validation accuracy 도 상승하고 test set 에 대한 accuracy 역시 상승 하였습니다. 특히 해당 과정은 뒤에서 언급할 새로운 이미지를 이용해 테스트 하는 과정에서 성능 향상에 많은 도움이 되었습니다.
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
@@ -164,7 +219,7 @@ Here are five German traffic signs that I found on the web:
 
 ![alt text][image5] 
 
-The first image might be difficult to classify because ...
+
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -174,9 +229,9 @@ Here are the results of the prediction:
 
 위 결과를 보면 대부분의 표지판은 제대로 인식하는 것을 알 수 있습니다.
 
-다만 train data set에서 40km/h 에 대한 데이터 set이 없어서 학습이 진행되지 않았기 때문에 30km/h로 결과가 측정 된 부분은
+다만 train data set에서 40km/h 에 대한 데이터 및 U턴에 데한 데이터 set이 없어서 
 
-data set이 보충된다면 해결 될 문제로 보이나
+학습이 진행되지 않았기 때문에 잘못 측정된 부분은 data set이 보충된다면 해결 될 문제로 보이나
 
 20km/h 표지판을 30km/h로 결과가 나온 것은 측정 오류로 보완해야 할 점으로 보입니다.
 
